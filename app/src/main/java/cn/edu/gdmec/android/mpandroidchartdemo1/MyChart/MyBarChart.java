@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.mpandroidchartdemo1.MyChart;
 
+import android.graphics.Color;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -38,12 +40,16 @@ public class MyBarChart {
     }
     public static void showBarChart(BarChart barChart,BarData barData){
         barChart.setData(barData);
-        barChart.animateY(2000);
+        barChart.animateY(1000);
         barChart.setDescription("柱状图");
         barChart.setScaleEnabled(false);
         barChart.setDescriptionTextSize(12f);
         barChart.setDescriptionPosition(720f,60f);
         barChart.getAxisRight().setEnabled(false);
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        barChart.setGridBackgroundColor(Color.WHITE);
+        barChart.getAxisLeft().setGridColor(Color.WHITE);
+        barChart.getXAxis().setGridColor(Color.WHITE);
+
     }
 }

@@ -41,6 +41,9 @@ public class MyLineChart {
         lineChart.setData(lineData);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lineChart.setGridBackgroundColor(Color.WHITE);
+        lineChart.getXAxis().setGridColor(Color.WHITE);
+        lineChart.getAxisLeft().setGridColor(Color.WHITE);
         lineChart.animateX(2000);
 
         Legend legend = lineChart.getLegend();

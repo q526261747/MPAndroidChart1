@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 
@@ -15,10 +16,12 @@ import java.util.List;
 
 import cn.edu.gdmec.android.mpandroidchartdemo1.Adapter.MyPagerAdapter;
 import cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyBarChart;
+import cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyHorizontalBarChart;
 import cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyLineChart;
 import cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyPieChart;
 
 import static cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyBarChart.getBarData;
+import static cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyHorizontalBarChart.getHorizontalBarData;
 import static cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyLineChart.getLineData;
 import static cn.edu.gdmec.android.mpandroidchartdemo1.MyChart.MyPieChart.getPieData;
 
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private LineChart mLineChart;
     private PieChart mPieChart;
     private BarChart mBarChart;
+    private HorizontalBarChart mHorizontalBarChart;
     private List<View> mViews = new ArrayList<>();
     private List<View> dots;
     private int oldPosition = 0;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         MyLineChart.showLineChart(mLineChart,getLineData(25,100));
         MyPieChart.showPieData(mPieChart,getPieData(4));
         MyBarChart.showBarChart(mBarChart,getBarData());
+        MyHorizontalBarChart.showHorizontalBarChart(mHorizontalBarChart,getHorizontalBarData());
     }
     public void setView(){
         LayoutInflater inflater = getLayoutInflater();
@@ -46,18 +51,22 @@ public class MainActivity extends AppCompatActivity {
         dots.add(findViewById(R.id.dot_1));
         dots.add(findViewById(R.id.dot_2));
         dots.add(findViewById(R.id.dot_3));
+        dots.add(findViewById(R.id.dot_4));
 
         dots.get(0).setBackgroundResource(R.drawable.dot_focused);
 
         View item_line = inflater.inflate(R.layout.chart_line,null);
         View item_pie = inflater.inflate(R.layout.chart_pie,null);
         View item_bar = inflater.inflate(R.layout.chart_bar,null);
+        View item_horizontal_bar = inflater.inflate(R.layout.chart_bar_horizontal,null);
         mLineChart = (LineChart) item_line.findViewById(R.id.spread_line_chart);
         mPieChart = (PieChart) item_pie.findViewById(R.id.spread_pie_chart);
         mBarChart = (BarChart) item_bar.findViewById(R.id.spread_bar_chart);
+        mHorizontalBarChart = (HorizontalBarChart) item_horizontal_bar.findViewById(R.id.spread_horizontal_bar);
         mViews.add(item_line);
         mViews.add(item_pie);
         mViews.add(item_bar);
+        mViews.add(item_horizontal_bar);
 
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
