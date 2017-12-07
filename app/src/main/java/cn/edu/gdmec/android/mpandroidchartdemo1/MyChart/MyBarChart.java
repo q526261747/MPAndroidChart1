@@ -18,13 +18,12 @@ import java.util.ArrayList;
 public class MyBarChart {
     public static BarData getBarData(){
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4f, 0));
-        entries.add(new BarEntry(8f, 1));
-        entries.add(new BarEntry(6f, 2));
-        entries.add(new BarEntry(12f, 3));
-        entries.add(new BarEntry(18f, 4));
-        entries.add(new BarEntry(9f, 5));
-
+        entries.add(new BarEntry(new float[]{3f,4f}, 0));
+        entries.add(new BarEntry(new float[]{9f,8f}, 1));
+        entries.add(new BarEntry(new float[]{8f,6f}, 2));
+        entries.add(new BarEntry(new float[]{15f,12f}, 3));
+        entries.add(new BarEntry(new float[]{20f,18f}, 4));
+        entries.add(new BarEntry(new float[]{11f,9f}, 5));
         ArrayList<String> labels = new ArrayList<>();
         labels.add("一月");
         labels.add("二月");
@@ -34,9 +33,18 @@ public class MyBarChart {
         labels.add("六月");
 
         BarDataSet barDataSet = new BarDataSet(entries,"一组数据");
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-
+        barDataSet.setColors(getColors());
+        barDataSet.setDrawValues(false);
         return new BarData(labels,barDataSet);
+    }
+    private static int[] getColors() {
+        int stacksize = 2;
+        //有尽可能多的颜色每项堆栈值
+        int[] colors = new int[stacksize];
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ColorTemplate.VORDIPLOM_COLORS[i];
+        }
+        return colors;
     }
     public static void showBarChart(BarChart barChart,BarData barData){
         barChart.setData(barData);
