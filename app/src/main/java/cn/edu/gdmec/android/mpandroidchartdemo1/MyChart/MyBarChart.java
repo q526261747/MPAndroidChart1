@@ -7,8 +7,13 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -31,16 +36,39 @@ public class MyBarChart {
         labels.add("四月");
         labels.add("五月");
         labels.add("六月");
-
         BarDataSet barDataSet = new BarDataSet(entries,"一组数据");
-        barDataSet.setColors(getColors());
-        barDataSet.setDrawValues(false);
+        barDataSet.setColors(getColors(2));
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            float toggle = 0;
+            float totalVal = 0;
+            protected DecimalFormat mFormat = new DecimalFormat("###,###,##0.0");
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex,
+                                            ViewPortHandler viewPortHandler) {
+                if(toggle % 2 == 0){
+                    toggle++;
+                    totalVal =  value;
+                    return "";
+                }
+//                else if(toggle % 3 == 1){
+//                    toggle++;
+//                    totalVal =  totalVal + value;
+//                    return "";
+//                }
+                else{
+                    toggle++;
+                    totalVal = totalVal + value;
+                    return mFormat.format(totalVal) + "%";
+                }
+//                return mFormat.format(value) + " %";
+            }
+        });
+        barDataSet.setStackLabels(new String[]{"难受","舒服"});
         return new BarData(labels,barDataSet);
     }
-    private static int[] getColors() {
-        int stacksize = 2;
+    private static int[] getColors(int stackSize) {
         //有尽可能多的颜色每项堆栈值
-        int[] colors = new int[stacksize];
+        int[] colors = new int[stackSize];
         for (int i = 0; i < colors.length; i++) {
             colors[i] = ColorTemplate.VORDIPLOM_COLORS[i];
         }
@@ -52,7 +80,8 @@ public class MyBarChart {
         barChart.setDescription("柱状图");
         barChart.setScaleEnabled(false);
         barChart.setDescriptionTextSize(12f);
-        barChart.setDescriptionPosition(720f,60f);
+        barChart.setDescriptionPosition(730f,60f);
+        barChart.setTop(barChart.getHighestVisibleXIndex());
         barChart.getAxisRight().setEnabled(false);
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.setGridBackgroundColor(Color.WHITE);
